@@ -33,6 +33,11 @@
             android:padding="10dp"
             android:text="Sample"
             />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:id="@+id/refid"
+            android:visibility="invisible"/>
     </LinearLayout>
     <View
         android:layout_width="match_parent"

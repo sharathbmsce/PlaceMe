@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -17,9 +16,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class recycler extends AppCompatActivity {
+
 DatabaseReference ref;
 ArrayList<jobs> list;
 RecyclerView recyclerView;
+public static ArrayList<String> keys=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +40,9 @@ RecyclerView recyclerView;
                         {
 
                             list.add(ds.getValue(jobs.class));
+                          keys.add(ds.getKey());
                         }
-                        AdapterClass adapterClass=new AdapterClass(list);
+                        AdapterClass adapterClass=new AdapterClass(list,keys);
                         LinearLayoutManager manager=new LinearLayoutManager(recycler.this);
                         manager.setOrientation(LinearLayoutManager.VERTICAL);
                         adapterClass.notifyDataSetChanged();
@@ -48,7 +50,7 @@ RecyclerView recyclerView;
                       //  recyclerView.setHasFixedSize(true);
                        recyclerView.setAdapter(adapterClass);
                         System.out.println(list.size());
-
+                        System.out.println(keys);
                     }
 
 

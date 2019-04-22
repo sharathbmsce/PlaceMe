@@ -37,7 +37,8 @@ private DatabaseReference mDatabase;
     }
 
     public void viewapps(View view) {
-
+Intent intent=new Intent(admin_selec.this,admin_appls.class);
+startActivity(intent);
     }
 
     public void logout(View view) {

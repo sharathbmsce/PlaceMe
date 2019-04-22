@@ -27,7 +27,8 @@ public class jobs {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        String trimdes=description.substring(0,35);
+        this.description = trimdes;
     }
 
     public String getDate() {

@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".recycler"></activity>
+        <activity android:name=".admin_appls"></activity>
+        <activity android:name=".job_desc" />
+        <activity android:name=".recycler" />
         <activity android:name=".admin_results" />
         <activity android:name=".stud_profile" />
         <activity

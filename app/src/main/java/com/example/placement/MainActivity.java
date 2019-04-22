@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     Toast.makeText(MainActivity.this, "User logged in ", Toast.LENGTH_SHORT).show();
-                    Intent I = new Intent(MainActivity.this, stud_home.class);
+                    // ADD STUD_HOME IF USER IS AVAILABLE *********************************
+                    Intent I = new Intent(MainActivity.this, recycler.class);
                     startActivity(I);
                 } else {
                     Toast.makeText(MainActivity.this, "Login to continue", Toast.LENGTH_SHORT).show();
@@ -78,7 +79,8 @@ public class MainActivity extends AppCompatActivity {
 
         }
         else {
-            Intent intent=new Intent(MainActivity.this,stud_home.class);
+            // ADD STUD_HOME REFERENCE AFTER LOGIN *****************
+            Intent intent=new Intent(MainActivity.this,recycler.class);
             startActivity(intent);
         }
     }

@@ -1,0 +1,51 @@
+package com.example.placement;
+
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+
+public class AdapterClass extends RecyclerView.Adapter<AdapterClass.MyViewHolder>
+{
+
+ArrayList<jobs> list;
+public AdapterClass(ArrayList<jobs> list)
+{
+    this.list=list;
+}
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    View view=LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_holder, viewGroup, false);
+        return new MyViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
+        myViewHolder.title.setText(list.get(i).getTitle());
+        myViewHolder.description.setText(list.get(i).getDescription());
+        myViewHolder.date.setText(list.get(i).getDate());
+    }
+
+    @Override
+    public int getItemCount() {
+        return list.size();
+    }
+
+    class MyViewHolder extends RecyclerView.ViewHolder
+    {
+TextView title,description,date;
+
+        public MyViewHolder(@NonNull View itemView) {
+            super(itemView);
+            title=itemView.findViewById(R.id.title);
+            description=itemView.findViewById(R.id.description);
+            date=itemView.findViewById(R.id.date);
+        }
+    }
+}

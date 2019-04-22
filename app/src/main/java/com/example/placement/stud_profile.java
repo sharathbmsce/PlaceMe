@@ -1,6 +1,9 @@
 package com.example.placement;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +11,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.*;
 import com.google.firebase.auth.FirebaseUser;
@@ -17,13 +22,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
+
 public class stud_profile extends AppCompatActivity {
 EditText stuname,stuno,stuss,stupu,stucg,stuusn;
 DatabaseReference mDatabase,rootRef,profRef;
+ImageView view1;
 FirebaseUser user;
     String st;
     FirebaseAuth firebaseAuth;
-
+private Uri filepath;
+private final int PICK_IMAGE_REQUEST=71;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -59,6 +68,7 @@ FirebaseUser user;
         stupu=(EditText)findViewById(R.id.pu);
         stucg=(EditText)findViewById(R.id.cgpa);
         stuusn=(EditText)findViewById(R.id.usn);
+        view1=(ImageView)findViewById(R.id.view);
         mDatabase= FirebaseDatabase.getInstance().getReference();
         user=FirebaseAuth.getInstance().getCurrentUser();
         if(user!=null)
@@ -164,6 +174,14 @@ FirebaseUser user;
         mDatabase.child("students").child(st).child("sslc").setValue(stssl);
         mDatabase.child("students").child(st).child("puc").setValue(stpu);
         mDatabase.child("students").child(st).child("cgpa").setValue(stcg);
+
+        stucg.setFocusableInTouchMode(false);
+        stuusn.setFocusableInTouchMode(false);
+        stuname.setFocusableInTouchMode(false);
+        stuno.setFocusableInTouchMode(false);
+        stuss.setFocusableInTouchMode(false);
+        stupu.setFocusableInTouchMode(false);
+
     }
 
     public void update(View view) {
@@ -173,5 +191,29 @@ FirebaseUser user;
         stuno.setFocusableInTouchMode(true);
         stuss.setFocusableInTouchMode(true);
         stupu.setFocusableInTouchMode(true);
+    }
+
+    public void select_image(View view) {
+        Intent intent=new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,"Select Picture"),PICK_IMAGE_REQUEST);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null )
+        {
+            filepath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filepath);
+                view1.setImageBitmap(bitmap);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 }

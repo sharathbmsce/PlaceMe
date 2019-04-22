@@ -3,6 +3,7 @@
     package="com.example.placement">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".stud_profile"></activity>
+        <activity android:name=".recycler"></activity>
+        <activity android:name=".admin_results" />
+        <activity android:name=".stud_profile" />
         <activity
             android:name=".stud_home"
             android:label="@string/title_activity_stud_home" />

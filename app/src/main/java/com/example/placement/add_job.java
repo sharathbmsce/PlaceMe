@@ -15,7 +15,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class add_job extends AppCompatActivity {
-EditText id,des,date1;
+EditText id,des,date1,title;
 private DatabaseReference mDatabase;
 final Calendar myCalendar=Calendar.getInstance();
     @Override
@@ -24,7 +24,8 @@ final Calendar myCalendar=Calendar.getInstance();
         setContentView(R.layout.activity_add_job);
         id = (EditText) findViewById(R.id.jid);
         des = (EditText) findViewById(R.id.desc);
-        date1 = (EditText) findViewById(R.id.date);
+        date1 = (EditText) findViewById(R.id.date_ret);
+        title=(EditText)findViewById(R.id.title);
         mDatabase= FirebaseDatabase.getInstance().getReference();
     }
 DatePickerDialog.OnDateSetListener date=new DatePickerDialog.OnDateSetListener() {
@@ -46,9 +47,10 @@ DatePickerDialog.OnDateSetListener date=new DatePickerDialog.OnDateSetListener()
 String jid=id.getText().toString();
 String jdate=date1.getText().toString();
 String jdes=des.getText().toString();
-
+String jtitle=title.getText().toString();
 mDatabase.child("jobs").child(jid).child("date").setValue(jdate);
 mDatabase.child("jobs").child(jid).child("description").setValue(jdes);
+mDatabase.child("jobs").child(jid).child("title").setValue(jtitle);
     }
 
     public void dateselec(View view) {

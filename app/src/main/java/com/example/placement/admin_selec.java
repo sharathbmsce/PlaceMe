@@ -30,6 +30,9 @@ private DatabaseReference mDatabase;
     }
 
     public void results(View view) {
+    Intent intent=new Intent(admin_selec.this,admin_results.class);
+    startActivity(intent);
+
 
     }
 

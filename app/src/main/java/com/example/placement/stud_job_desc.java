@@ -15,19 +15,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class job_desc extends AppCompatActivity {
-TextView date,desc,title,company;
-String date1,title1,company1,desc1;
-String us,key,jtit,susn;
-DatabaseReference mDatabase,pDatabase,sDatabase,oDatabase;
-DatabaseReference aDatabase;
-FirebaseUser user;
+public class stud_job_desc extends AppCompatActivity {
+    TextView date,desc,title,company;
+    String date1,title1,company1,desc1;
+    String us,key,jtit,susn;
+    DatabaseReference mDatabase,pDatabase,sDatabase,oDatabase;
+    DatabaseReference aDatabase;
+    FirebaseUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_job_desc);
+        setContentView(R.layout.activity_stud_job_desc);
         Intent intent=getIntent();
-         key=intent.getStringExtra("JID");
+        key=intent.getStringExtra("JID");
         final String key1=key.substring(0,2);
         System.out.println(key1);
         date=(TextView)findViewById(R.id.jdate);
@@ -42,9 +42,9 @@ FirebaseUser user;
 
         if (user!=null)
         {
-           us=user.getEmail().replace(".",",");
+            us=user.getEmail().replace(".",",");
         }
-      System.out.println(us);
+        System.out.println(us);
         sDatabase=FirebaseDatabase.getInstance().getReference().child("students").child(us);
         mDatabase.child("date").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -99,60 +99,5 @@ FirebaseUser user;
             }
         });
 
-    }
-
-    public void apply(View view) {
-        sDatabase.child("usn").addListenerForSingleValueEvent(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-             final String  stusn=dataSnapshot.getValue(String.class);
-             sDatabase.child("name").addListenerForSingleValueEvent(new ValueEventListener() {
-                 @Override
-                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                     String stuname=dataSnapshot.getValue(String.class);
-                     aDatabase.child(key).child(stusn).child("name").setValue(stuname);
-                 }
-
-                 @Override
-                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                 }
-             });
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        mDatabase.child("title").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-             jtit=dataSnapshot.getValue(String.class);
-             sDatabase.child("usn").addListenerForSingleValueEvent(new ValueEventListener() {
-                 @Override
-                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                     susn=dataSnapshot.getValue(String.class);
-                     oDatabase.child(susn).child(key).child("title").setValue(jtit);
-                     oDatabase.child(susn).child(key).child("date").setValue(date1);
-                     oDatabase.child(susn).child(key).child("description").setValue(desc1);
-                 }
-
-                 @Override
-                 public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                 }
-             });
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 }

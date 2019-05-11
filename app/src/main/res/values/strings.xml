@@ -9,4 +9,5 @@
     <string name="applications">Applications</string>
     <string name="home">Home</string>
     <string name="title_activity_job_desc">job_desc</string>
+    <string name="upload">Upload</string>
 </resources>

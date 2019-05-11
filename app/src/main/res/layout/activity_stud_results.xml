@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".recycler">
-    <android.support.v7.widget.RecyclerView
+    android:id="@+id/res_lin"
+    tools:context=".stud_results">
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        android:id="@+id/recycler">
-
-    </android.support.v7.widget.RecyclerView>
-
+        android:text="RESULTS"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:background="@color/colorPrimary"
+        android:textSize="70sp"
+        android:textAlignment="center"
+        />
 </LinearLayout>

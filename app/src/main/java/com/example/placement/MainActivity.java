@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 if (user != null) {
                     Toast.makeText(MainActivity.this, "User logged in ", Toast.LENGTH_SHORT).show();
                     // ADD STUD_HOME IF USER IS AVAILABLE *********************************
-                    Intent I = new Intent(MainActivity.this, recycler.class);
+                    Intent I = new Intent(MainActivity.this,stud_appls.class);
                     startActivity(I);
                 } else {
                     Toast.makeText(MainActivity.this, "Login to continue", Toast.LENGTH_SHORT).show();
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             // ADD STUD_HOME REFERENCE AFTER LOGIN *****************
-            Intent intent=new Intent(MainActivity.this,recycler.class);
+            Intent intent=new Intent(MainActivity.this,stud_appls.class);
             startActivity(intent);
         }
     }

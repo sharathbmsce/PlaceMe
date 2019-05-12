@@ -85,4 +85,11 @@ jDatabase.child(id).child("title").addListenerForSingleValueEvent(new ValueEvent
 });
 
     }
+
+    public void remove(View view) {
+        String id=jobid.getText().toString();
+        jDatabase.child(id).removeValue();
+
+
+    }
 }

@@ -1,12 +1,19 @@
 package com.example.placement;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -16,18 +23,21 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
 
 public class admin_appls extends AppCompatActivity {
 DatabaseReference mDatabase,jDatabase,cDatabase;
 EditText jid;
 LinearLayout linear;
-    private  int text1=10,i=0;
+private  int text1=10,i=0;
 TextView title1,compname;
+TableLayout tb;
 String jids,title,sjid;
 ArrayList<String>usn=new ArrayList<>();
-ArrayList<String>usn1;
+ArrayList<String>cgpa=new ArrayList<>();
 ArrayList<String>name=new ArrayList<>();
-    @Override
+@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_appls);
@@ -39,9 +49,12 @@ ArrayList<String>name=new ArrayList<>();
         title1=(TextView)findViewById(R.id.jobtitle);
         compname=(TextView)findViewById(R.id.compname);
          linear=(LinearLayout)findViewById(R.id.linear);
-    }
+         tb=(TableLayout)findViewById(R.id.tb);
 
-    public void search(View view) {
+
+
+    }
+    public void search(View view) throws InterruptedException {
 
         jids = jid.getText().toString();
         sjid = jids.substring(0, 2);
@@ -74,31 +87,15 @@ ArrayList<String>name=new ArrayList<>();
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     usn.add(d.getKey());
-                    usn1 = usn;
+
                 }
-                System.out.println(usn.size());
-                for ( i=0;i< usn.size();i++) {
-                    mDatabase.child(jids).child(usn1.get(i)).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
-                      @ Override
+                System.out.println(usn);
+                for (i = 0; i < usn.size(); i++) {
+                    mDatabase.child(jids).child(usn.get(i)).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
 
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                           int top = 200, left = 230;
                             name.add(dataSnapshot.getValue(String.class));
-                            EditText e=new EditText(admin_appls.this);
-                            e.setId(text1);
-                            e.setText(name.get(usn.size()-i)+"---"+ usn.get(usn.size()-i));
-                          e.setFocusableInTouchMode(false);
-                          e.setBackgroundColor(android.R.color.transparent);
-                          e.setEms(11);
-                          e.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                          LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) e.getLayoutParams();
-                          params.setMargins(left, top, 0, 0);
-                          e.setLayoutParams(params);
-                          linear.addView(e);
-                          /*  System.out.println(i);
-                          System.out.println(usn.get(usn.size()-i));
-                          System.out.println(name.get(usn.size()-i));*/
-                          i--;
 
                         }
                         @Override
@@ -107,6 +104,18 @@ ArrayList<String>name=new ArrayList<>();
                         }
 
                     });
+                    mDatabase.child(jids).child(usn.get(i)).child("cgpa").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            cgpa.add(dataSnapshot.getValue(String.class));
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
 
 
                 }
@@ -120,7 +129,9 @@ ArrayList<String>name=new ArrayList<>();
             }
         });
 
-/*
+        System.out.println(name.size());
+
+        /*
         final int top = 300, left = 230;
         System.out.println(usn1.size());
         for ( i=0;i< usn1.size();i++)
@@ -155,5 +166,28 @@ ArrayList<String>name=new ArrayList<>();
             });
         }}
 */
-    } }
+    }
+
+    public void display(View view) {
+        for (int i = 0; i < usn.size(); i++) {
+            TableRow r = new TableRow(this);
+            TextView v = new TextView(this);
+            TextView q = new TextView(this);
+            TextView s = new TextView(this);
+            q.setText(cgpa.get(i));
+            s.setText(usn.get(i));
+            s.setTextSize(25);
+            q.setTextSize(25);
+            v.setText(name.get(i));
+            v.setTextSize(25);
+            v.setTextColor(R.color.colorPrimary);
+            r.addView(v);
+            r.addView(s);
+            r.addView(q);
+            tb.addView(r);
+
+
+        }
+    }
+}
 

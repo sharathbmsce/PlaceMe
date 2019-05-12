@@ -110,8 +110,22 @@ FirebaseUser user;
              sDatabase.child("name").addListenerForSingleValueEvent(new ValueEventListener() {
                  @Override
                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                     String stuname=dataSnapshot.getValue(String.class);
-                     aDatabase.child(key).child(stusn).child("name").setValue(stuname);
+                     final String stuname=dataSnapshot.getValue(String.class);
+                     sDatabase.child("cgpa").addListenerForSingleValueEvent(new ValueEventListener() {
+                         @Override
+                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                             String us=dataSnapshot.getValue(String.class);
+                             aDatabase.child(key).child(stusn).child("name").setValue(stuname);
+                             aDatabase.child(key).child(stusn).child("cgpa").setValue(us);
+                         }
+
+                         @Override
+                         public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                         }
+                     });
+
+
                  }
 
                  @Override

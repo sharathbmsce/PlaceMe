@@ -38,10 +38,10 @@ public static ArrayList<String> keys=new ArrayList<>();
                         list=new ArrayList<>();
                         for(DataSnapshot ds: dataSnapshot.getChildren())
                         {
-
                             list.add(ds.getValue(jobs.class));
                           keys.add(ds.getKey());
                         }
+
                         AdapterClass adapterClass=new AdapterClass(list,keys);
                         LinearLayoutManager manager=new LinearLayoutManager(recycler.this);
                         manager.setOrientation(LinearLayoutManager.VERTICAL);

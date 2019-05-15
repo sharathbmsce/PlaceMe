@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -76,6 +77,7 @@ jDatabase.child(id).child("title").addListenerForSingleValueEvent(new ValueEvent
             mDatabase.child(strings[k]).child(jobt).child("title").setValue(jtitle);
             System.out.println("im here");
         }
+        Toast.makeText(admin_results.this,"Results Uploaded",Toast.LENGTH_LONG).show();;
     }
 
     @Override
@@ -83,7 +85,6 @@ jDatabase.child(id).child("title").addListenerForSingleValueEvent(new ValueEvent
 
     }
 });
-
     }
 
     public void remove(View view) {

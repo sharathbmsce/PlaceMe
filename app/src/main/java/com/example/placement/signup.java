@@ -51,6 +51,7 @@ EditText email,pass,pass1;
                                 "SignUp unsuccessful: " + task.getException().getMessage(),
                                 Toast.LENGTH_SHORT).show();
                     } else {
+                        Toast.makeText(signup.this,"Sign Up Successful",Toast.LENGTH_LONG).show();
                         startActivity(new Intent(signup.this, stud_home.class));
                     }
                 }

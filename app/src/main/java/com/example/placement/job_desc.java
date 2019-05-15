@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -115,7 +118,14 @@ FirebaseUser user;
                          @Override
                          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                              String us=dataSnapshot.getValue(String.class);
-                             aDatabase.child(key).child(stusn).child("name").setValue(stuname);
+                             aDatabase.child(key).child(stusn).child("name").setValue(stuname).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                 @Override
+                                 public void onComplete(@NonNull Task<Void> task) {
+                                     Toast.makeText(job_desc.this,"Succesfully Applied!",Toast.LENGTH_LONG).show();
+                                     Intent i=new Intent(job_desc.this,recycler.class);
+                                     startActivity(i);
+                                 }
+                             });
                              aDatabase.child(key).child(stusn).child("cgpa").setValue(us);
                          }
 

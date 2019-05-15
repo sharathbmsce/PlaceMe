@@ -3,7 +3,6 @@ package com.example.placement;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -36,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 if (user != null) {
                     Toast.makeText(MainActivity.this, "User logged in ", Toast.LENGTH_SHORT).show();
                     // ADD STUD_HOME IF USER IS AVAILABLE *********************************
-                    Intent I = new Intent(MainActivity.this,recycler.class);
+                    Intent I = new Intent(MainActivity.this, recycler.class);
                     startActivity(I);
                 } else {
                     Toast.makeText(MainActivity.this, "Login to continue", Toast.LENGTH_SHORT).show();
@@ -80,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             // ADD STUD_HOME REFERENCE AFTER LOGIN *****************
-            Intent intent=new Intent(MainActivity.this,recycler.class);
+            Intent intent=new Intent(MainActivity.this, recycler.class);
             startActivity(intent);
         }
     }

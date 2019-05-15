@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -23,13 +24,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 
 public class admin_appls extends AppCompatActivity {
-    DatabaseReference mDatabase, jDatabase, cDatabase;
+    DatabaseReference mDatabase, jDatabase, cDatabase,sDatabase;
     EditText jid;
     LinearLayout linear;
+    CheckBox em,pn,ss,pu;
     private int text1 = 10, i = 0;
     TextView title1, compname;
     TableLayout tb;
@@ -37,6 +40,10 @@ public class admin_appls extends AppCompatActivity {
     ArrayList<String> usn = new ArrayList<>();
     ArrayList<String> cgpa = new ArrayList<>();
     ArrayList<String> name = new ArrayList<>();
+    ArrayList<String>phnno=new ArrayList<>();
+    ArrayList<String>sslc=new ArrayList<>();
+    ArrayList<String>puc=new ArrayList<>();
+    ArrayList<String>email=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +58,11 @@ public class admin_appls extends AppCompatActivity {
         compname = (TextView) findViewById(R.id.compname);
         linear = (LinearLayout) findViewById(R.id.linear);
         tb = (TableLayout) findViewById(R.id.tb);
-
+        em=(CheckBox)findViewById(R.id.em);
+        pn=(CheckBox)findViewById(R.id.pn);
+        ss=(CheckBox)findViewById(R.id.ss);
+        pu=(CheckBox)findViewById(R.id.pu);
+        sDatabase=FirebaseDatabase.getInstance().getReference().child("students");
 
     }
 
@@ -142,20 +153,61 @@ public class admin_appls extends AppCompatActivity {
             TextView v = new TextView(this);
             TextView q = new TextView(this);
             TextView s = new TextView(this);
+            TextView e=new TextView(this);
+            TextView ph=new TextView(this);
+            TextView ssl=new TextView(this);
+            TextView pucs=new TextView(this);
             q.setText(cgpa.get(i));
             s.setText(usn.get(i));
-            s.setTextSize(25);
-            q.setTextSize(25);
+            e.setText(email.get(i));
             v.setText(name.get(i));
-            v.setTextSize(25);
+            ph.setText(phnno.get(i));
+            ssl.setText(sslc.get(i));
+            pucs.setText(puc.get(i));
             v.setTextColor(R.color.colorPrimary);
             r.addView(v);
             r.addView(s);
             r.addView(q);
+            if (em.isChecked())
+                r.addView(e);
+            if(pn.isChecked())
+                r.addView(ph);
+            if(ss.isChecked())
+                r.addView(ssl);
+            if (pu.isChecked())
+                r.addView(pucs);
+
             tb.addView(r);
 
 
         }
     }
-}
+    public void fetch(View view) {
+        for (int j=0;j<name.size();j++)
+        {
+            sDatabase.orderByChild("name").equalTo(name.get(j)).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    HashMap<String, HashMap<String, String>> map = (HashMap<String, HashMap<String, String>>) dataSnapshot.getValue();
+                    for(HashMap.Entry<String,HashMap<String,String>> entry : map.entrySet())
+                    {
+                        String em=entry.getKey();
+                        email.add(entry.getKey());
+                        phnno.add(map.get(em).get("phnno"));
+                        sslc.add(map.get(em).get("sslc"));
+                        puc.add(map.get(em).get("puc"));
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
+
+        }
+}}
 

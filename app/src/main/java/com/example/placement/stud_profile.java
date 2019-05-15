@@ -40,18 +40,21 @@ private final int PICK_IMAGE_REQUEST=71;
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navprofile:
-                    Intent intent=new Intent(stud_profile.this,stud_profile.class);
+                    Intent intent=new Intent(getApplicationContext(),stud_profile.class);
                     startActivity(intent);
                     return true;
                 case R.id.navresults:
-                 //   mTextMessage.setText(R.string.title_dashboard);
+                    Intent intent1=new Intent(getApplicationContext(),stud_results.class);
+                    startActivity(intent1);
                     return true;
                 case R.id.navapps:
-                   // mTextMessage.setText(R.string.title_notifications);
+                    Intent intent2=new Intent(getApplicationContext(),stud_appls.class);
+                    intent2.putExtra("USN",stuusn.getText().toString());
+                    startActivity(intent2);
                     return true;
                 case R.id.navhome:
-                    Intent intent1=new Intent(stud_profile.this,stud_home.class);
-                    startActivity(intent1);
+                    Intent intent3=new Intent(getApplicationContext(),recycler.class);
+                    startActivity(intent3);
                     return true;
             }
             return false;
@@ -77,7 +80,7 @@ private final int PICK_IMAGE_REQUEST=71;
         }
       rootRef=FirebaseDatabase.getInstance().getReference();
       profRef=rootRef.child("students").child(st);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation1);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigationbar);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         profRef.child("name").addListenerForSingleValueEvent(new ValueEventListener() {

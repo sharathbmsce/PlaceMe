@@ -1,8 +1,11 @@
 package com.example.placement;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -26,8 +29,35 @@ public class stud_results extends AppCompatActivity {
     ArrayList<String> jids = new ArrayList<>();
     ArrayList<String> jtitle = new ArrayList<>();
     TableLayout tb;
+BottomNavigationView b;
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-    //ArrayList<String> id=new ArrayList<>();
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navprofile:
+                    Intent intent=new Intent(getApplicationContext(),stud_profile.class);
+                    startActivity(intent);
+                    return true;
+                case R.id.navresults:
+                    Intent intent1=new Intent(getApplicationContext(),stud_results.class);
+                    startActivity(intent1);
+                    return true;
+                case R.id.navapps:
+                    Intent intent2=new Intent(getApplicationContext(),stud_appls.class);
+                    startActivity(intent2);
+                    return true;
+                case R.id.navhome:
+                    Intent intent3=new Intent(getApplicationContext(),stud_home.class);
+                    startActivity(intent3);
+                    return true;
+            }
+            return false;
+        }
+    };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +67,8 @@ public class stud_results extends AppCompatActivity {
         pDatabase = FirebaseDatabase.getInstance().getReference().child("students");
         uDatabase = FirebaseDatabase.getInstance().getReference().child("jobs");
         user = FirebaseAuth.getInstance().getCurrentUser();
+        b=findViewById(R.id.navigationbar);
+        b.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         if (user != null) {
             email = user.getEmail();
         }

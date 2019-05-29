@@ -22,12 +22,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class stud_results extends AppCompatActivity {
-    DatabaseReference mDatabase, pDatabase, uDatabase;
+    DatabaseReference mDatabase, pDatabase, uDatabase,cDatabase;
     FirebaseUser user;
     String usn, email;
     String k;
     ArrayList<String> jids = new ArrayList<>();
     ArrayList<String> jtitle = new ArrayList<>();
+    ArrayList<String> names=new ArrayList<>();
     TableLayout tb;
 BottomNavigationView b;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -66,6 +67,7 @@ BottomNavigationView b;
         tb = (TableLayout) findViewById(R.id.table);
         pDatabase = FirebaseDatabase.getInstance().getReference().child("students");
         uDatabase = FirebaseDatabase.getInstance().getReference().child("jobs");
+        cDatabase=FirebaseDatabase.getInstance().getReference().child("company");
         user = FirebaseAuth.getInstance().getCurrentUser();
         b=findViewById(R.id.navigationbar);
         b.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -96,6 +98,19 @@ BottomNavigationView b;
 
                                 }
                             });
+                                String st=jids.get(i).substring(0,2);
+                                System.out.println(st);
+                                cDatabase.child(st).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        names.add(dataSnapshot.getValue(String.class));
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
 
                         }
                     }
@@ -112,16 +127,21 @@ BottomNavigationView b;
 
             }
         });
-    }
+
+
+
+        }
+
 
     public void dis(View view) {
+        System.out.println(names);
         System.out.println(jids.size());
         for (int i = 0; i < jids.size(); i++) {
             TableRow r = new TableRow(this);
             TextView v = new TextView(this);
             TextView q = new TextView(this);
             TextView s = new TextView(this);
-            q.setText(jids.get(i));
+          q.setText(names.get(i));
             s.setText(jtitle.get(i));
             s.setTextSize(25);
             q.setTextSize(25);

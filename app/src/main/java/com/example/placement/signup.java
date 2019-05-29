@@ -52,7 +52,7 @@ EditText email,pass,pass1;
                                 Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(signup.this,"Sign Up Successful",Toast.LENGTH_LONG).show();
-                        startActivity(new Intent(signup.this, stud_home.class));
+                        startActivity(new Intent(signup.this, recycler.class));
                     }
                 }
             });
